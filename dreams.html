@@ -230,7 +230,6 @@ input[type=range].fin{padding:0;height:34px;accent-color:#8b5cf6;border:none;bac
 
 footer{background:rgba(6,3,20,.9);color:#94a3b8;text-align:center;padding:50px 20px;border-top:1px solid rgba(139,92,246,.25);margin-top:40px}
 </style>
-<script src="https://js.puter.com/v2/"></script>
 <base target="_blank">
 <base target="_blank">
 </head>
@@ -550,6 +549,8 @@ sy_ai_reading:"Aap ki AI Dream Tabeer",
 sy_ai_fail:"AI abhi rasai mein nahi \u2014 built-in decoder use ho raha hai."});
 Object.assign(translations.en,{sy_ai_wait:"AI deep reading in progress\u2026",sy_ai_fail2:"AI is busy right now \u2014 the instant reading above is complete."});
 Object.assign(translations.ur,{sy_ai_wait:"AI gehri tabeer tayyar kar raha hai\u2026",sy_ai_fail2:"AI abhi masroof hai \u2014 upar instant tabeer mukammal hai."});
+Object.assign(translations.en,{sy_retry:"\uD83D\uDD01 Retry AI Reading"});
+Object.assign(translations.ur,{sy_retry:"\uD83D\uDD01 AI Tabeer Dobara Karein"});
 function loadLang(){try{return localStorage.getItem('minduniverse_lang')||'en';}catch(e){return 'en';}}
 function saveLang(l){try{localStorage.setItem('minduniverse_lang',l);}catch(e){}}
 let currentLang=loadLang();
@@ -786,33 +787,47 @@ var syKeyBox=document.getElementById('syKeyBox');
 document.getElementById('syKeyT').onclick=function(){syKeyBox.style.display=syKeyBox.style.display==='none'?'flex':'none';};
 document.getElementById('syKey').value=(function(){try{return localStorage.getItem('mu_dream_aikey')||'';}catch(e){return '';}})();
 document.getElementById('syKeySave').onclick=function(){try{localStorage.setItem('mu_dream_aikey',document.getElementById('syKey').value.trim());}catch(e){}toast(t('sy_key_saved'));};
-async function fastAi(raw){
+async function aiDecode(raw){
 var sys='You are a wise, compassionate dream interpreter speaking directly to the dreamer in a warm personal tone. Interpret the dream below in flowing prose (no headings, no lists, no markdown): first paint the picture of the dream in 2-3 sentences, then explain what it means using well-known psychological dream symbolism in 3-5 sentences, then share what the dream is telling them in 2-3 sentences of gentle practical guidance, and end with one short comforting line. Keep it under 220 words.';
-var jobs=[];
 var syKey=(function(){try{return localStorage.getItem('mu_dream_aikey')||'';}catch(e){return '';}})();
-if(syKey){jobs.push((async()=>{var r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+syKey},body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'system',content:sys},{role:'user',content:'My dream: '+raw}],temperature:.7})});if(!r.ok)throw new Error('api');var j=await r.json();return j.choices[0].message.content.trim();})());}
-if(window.puter&&puter.ai&&puter.ai.chat){jobs.push((async()=>{var r=await puter.ai.chat(sys+'\n\nMy dream: '+raw);
-var cc=typeof r==='string'?r:((r&&r.message&&r.message.content)||'');
-cc=String(cc||'').trim();if(cc.length<20)throw new Error('puter-empty');return cc;})());}
-jobs.push((async()=>{var r=await fetch('https://text.pollinations.ai/'+encodeURIComponent(sys+'\n\nMy dream: '+raw)+'?model=openai');if(!r.ok)throw new Error('ai');var o=await r.text();if(!o||o.length<20)throw new Error('empty');return o.trim();})());
-if(!jobs.length)throw new Error('none');
-var out=await Promise.race(jobs);
-if(!out)throw new Error('empty');
-return out;}
+var lastErr=null;
+for(var attempt=1;attempt<=3;attempt++){
+var subEl=document.getElementById('syAiSub');
+if(subEl)subEl.textContent=t('sy_ai_wait')+(!syKey&&attempt>1?' \u2022 '+attempt+'/3':'');
+try{
+if(syKey){
+var r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+syKey},body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'system',content:sys},{role:'user',content:'My dream: '+raw}],temperature:.7})});
+if(!r.ok)throw new Error('api');
+var j=await r.json();return j.choices[0].message.content.trim();}
+var ctl=new AbortController();
+var to=setTimeout(function(){ctl.abort();},18000);
+try{
+var r2=await fetch('https://text.pollinations.ai/'+encodeURIComponent(sys+'\n\nMy dream: '+raw)+'?model=openai',{signal:ctl.signal});
+if(!r2.ok)throw new Error('ai');
+var out=await r2.text();
+if(!out||out.length<20)throw new Error('empty');
+return out.trim();
+}finally{clearTimeout(to);}
+}catch(e){lastErr=e;if(attempt<3)await new Promise(function(res){setTimeout(function(){res();},2000);});}
+}
+throw lastErr||new Error('fail');}
+async function tryAi(){
+var syRaw=document.getElementById('syDream').value.trim();
+var box=document.getElementById('syAiBox');
+box.innerHTML='<div class="stage-msg" style="font-size:13.5px;padding:12px">\u2728 '+t('sy_loading')+'</div><div class="stage-msg" id="syAiSub" style="font-size:11px;color:#94a3b8;padding-bottom:6px">'+t('sy_ai_wait')+'</div>';
+try{
+var syOut=await aiDecode(syRaw);
+box.innerHTML='<h3 style="font-size:15px;color:#fff;margin-top:6px">\u2726 '+t('sy_ai_reading')+'</h3><div class="symcard" style="background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(251,191,36,.1))"><p style="font-size:14px;line-height:1.8;white-space:pre-wrap">'+esc(syOut)+'</p></div>';
+box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}catch(e){
+box.innerHTML='<div class="stage-msg" style="font-size:11.5px;color:#94a3b8;padding:8px">'+t('sy_ai_fail2')+'</div><div class="stat-row" style="justify-content:center;padding-bottom:8px"><button class="ghost-btn" id="syRetry">'+t('sy_retry')+'</button></div>';
+document.getElementById('syRetry').onclick=function(){tryAi();};}}
 async function decode(){
 var syRaw=document.getElementById('syDream').value.trim();
 if(syRaw.length<10){toast(t('sy_short'));return;}
 var syBtn=document.getElementById('syGo');syBtn.disabled=true;
 localDecode();
-var box=document.getElementById('syAiBox');
-box.innerHTML='<div class="stage-msg" style="font-size:12.5px;padding:10px">\u2728 '+t('sy_ai_wait')+'</div>';
-try{
-var syTO=new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},15000);});
-var syOut=await Promise.race([fastAi(syRaw),syTO]);
-box.innerHTML='<h3 style="font-size:15px;color:#fff;margin-top:6px">\u2726 '+t('sy_ai_reading')+'</h3><div class="symcard" style="background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(251,191,36,.1))"><p style="font-size:14px;line-height:1.8;white-space:pre-wrap">'+esc(syOut)+'</p></div>';
-box.scrollIntoView({behavior:'smooth',block:'nearest'});
-}catch(e){
-box.innerHTML='<div class="stage-msg" style="font-size:11.5px;color:#94a3b8">'+t('sy_ai_fail2')+'</div>';}
+await tryAi();
 syBtn.disabled=false;}
 function localDecode(){
 const raw=document.getElementById('syDream').value.trim();
@@ -840,8 +855,7 @@ let msg=null;
 for(const r of MSG_RULES){if(r.ids.some(id=>ids.includes(id))){msg=r[lang][h%2];break;}}
 if(!msg)msg=DEFAULT_MSG[tone][lang][h%2];
 html+='<h3 style="font-size:15px;color:#fff;margin-top:6px">\u2726 '+t('sy_msg')+'</h3>'
-+'<div class="symcard"><p style="font-size:14px;margin-bottom:10px">'+msg+'</p><p style="font-size:13px;color:#94a3b8">'+FLAVOR[tone][lang]+'</p></div>';
-html+='<div class="stage-msg" style="font-size:13px;margin-top:4px">'+(found.length?t('sy_close'):t('sy_close_none'))+'</div>';
++'<div class="symcard"><p style="font-size:14px">'+msg+'</p></div>';
 const res=document.getElementById('syResult');
 res.innerHTML=html;
 res.scrollIntoView({behavior:'smooth',block:'nearest'});}
