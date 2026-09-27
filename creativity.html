@@ -72,6 +72,55 @@ header{position:sticky;top:20px;z-index:999}
 .launch:hover{transform:translateY(-3px);box-shadow:0 25px 50px rgba(251,191,36,.4)}
 @media(max-width:1024px){.orbits{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.orbits{grid-template-columns:1fr}}
+/* ===== PRO UPGRADE ===== */
+.section-eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:4px;color:#fbbf24;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.35);padding:8px 20px;border-radius:999px;margin-bottom:18px}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* Mission strip + quick launch */
+.mission-strip{max-width:1200px;margin:0 auto 44px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;border-radius:24px;background:linear-gradient(120deg,rgba(139,92,246,.2),rgba(251,191,36,.07) 60%,rgba(10,6,25,.7));border:1.5px solid rgba(251,191,36,.35);box-shadow:0 25px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.07);position:relative;overflow:hidden}
+.mission-strip::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 15%,rgba(251,191,36,.16),transparent 50%);pointer-events:none}
+.ms-badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:2.5px;color:#fbbf24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.45);padding:5px 15px;border-radius:999px;margin-bottom:9px}
+.ms-text{font-size:17px;font-weight:900;color:#fff;margin-bottom:11px;line-height:1.4}
+.ms-progress{display:flex;align-items:center;gap:12px}
+.ms-bar{width:190px;height:7px;border-radius:7px;background:rgba(139,92,246,.18);overflow:hidden}
+.ms-bar b{display:block;height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,#8b5cf6,#fbbf24);transition:width .8s cubic-bezier(.16,1,.3,1)}
+.ms-count{font-size:12px;font-weight:800;color:#94a3b8;min-width:44px}
+.ms-launch{display:flex;gap:11px;flex-wrap:wrap}
+.qp{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#fbbf24);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:2px solid rgba(251,191,36,.4);box-shadow:0 10px 25px rgba(139,92,246,.35);transition:transform .25s ease,box-shadow .25s ease;font-family:inherit}
+.qp:hover{transform:translateY(-5px) scale(1.12);box-shadow:0 18px 40px rgba(251,191,36,.5)}
+@media(max-width:700px){.mission-strip{flex-direction:column;align-items:flex-start;padding:22px}.ms-launch{justify-content:center;width:100%}}
+
+/* Card upgrades */
+.card{transform-style:preserve-3d;overflow:hidden}
+.tilt{transition:transform .16s ease-out,box-shadow .35s ease,border-color .35s ease}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(251,191,36,.14),transparent 45%);opacity:0;transition:opacity .35s;pointer-events:none}
+.card:hover::after{opacity:1}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}
+.card .icon{margin-bottom:0;position:relative}
+.card .icon::before{content:"";position:absolute;inset:-6px;border-radius:24px;border:1.5px dashed rgba(251,191,36,.4);animation:orbitSpin 9s linear infinite}
+.card-side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.badge{font-size:10px;font-weight:800;letter-spacing:1.5px;padding:5px 13px;border-radius:999px}
+.badge-hot{background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.5);color:#fbbf24}
+.badge-new{background:rgba(232,121,249,.14);border:1px solid rgba(232,121,249,.5);color:#e879f9}
+.badge-core{background:rgba(52,211,153,.14);border:1px solid rgba(52,211,153,.5);color:#34d399}
+.badge-cool{background:rgba(34,211,238,.14);border:1px solid rgba(34,211,238,.5);color:#22d3ee}
+.difficulty{display:flex;gap:4px}
+.difficulty i{width:16px;height:5px;border-radius:3px;background:rgba(148,163,184,.22)}
+.difficulty i.on{background:linear-gradient(90deg,#8b5cf6,#fbbf24);box-shadow:0 0 10px rgba(251,191,36,.55)}
+.neuro-load{margin:14px 0 16px;display:flex;flex-direction:column;gap:8px;border-top:1px dashed rgba(139,92,246,.3);padding-top:14px}
+.nl-row{display:flex;align-items:center;gap:10px;font-size:11px}
+.nl-row>span{width:88px;flex-shrink:0;color:#94a3b8;font-weight:600}
+.nl-bar{flex:1;height:5px;border-radius:5px;background:rgba(139,92,246,.16);overflow:hidden}
+.nl-bar b{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#8b5cf6,#fbbf24);transition:width 1.1s cubic-bezier(.16,1,.3,1) .35s}
+.reveal.visible .nl-bar b{width:var(--w)}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:2px 0 16px}
+.dur-chip{font-size:11px;font-weight:700;color:#94a3b8;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);padding:6px 13px;border-radius:999px}
+.card .cstat{margin:0;font-size:12px;font-weight:700;color:#94a3b8;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);padding:6px 13px;border-radius:999px}
+.card .cstat b{color:#fbbf24}
+.mapchips span{transition:.3s}
+.mapchips span:hover{background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.5);color:#fbbf24;transform:translateY(-2px)}
+@media(max-width:700px){.card-side{align-items:flex-start}}
 .tips{max-width:1100px;margin:20px auto 90px;padding:0 20px}
 .tip-box{background:linear-gradient(180deg,rgba(38,22,84,.45),rgba(10,6,25,.7));border:1.5px solid rgba(139,92,246,.3);border-radius:24px;padding:36px}
 .tip-box h3{font-size:20px;margin-bottom:18px;color:#fff}
@@ -172,17 +221,119 @@ footer{background:rgba(6,3,20,.9);color:#94a3b8;text-align:center;padding:50px 2
 </section>
 
 <section id="orbits">
-    <div class="section-head fancy-head">
+    <div class="section-head fancy-head reveal">
+        <span class="section-eyebrow" data-key="eyebrow">◆ DIVERGENT THINKING LAB ◆</span>
         <h2 data-key="orb_title">Orbit Instruments</h2>
         <p data-key="orb_sub">Six engines of divergent thinking. Open any instrument.</p>
     </div>
+    <div class="mission-strip reveal">
+        <div class="ms-left">
+            <span class="ms-badge" id="msBadge">🔥 TODAY'S MISSION</span>
+            <div class="ms-text" id="msText">—</div>
+            <div class="ms-progress">
+                <div class="ms-bar"><b id="msBar"></b></div>
+                <span class="ms-count" id="msCount">0 / 1</span>
+            </div>
+        </div>
+        <div class="ms-launch" id="msLaunch"></div>
+    </div>
     <div class="orbits">
-        <div class="card"><div class="icon">⚡</div><h3 data-key="c1t">Divergent Sprint</h3><p class="tagline" data-key="c1tag">Alternative uses · Torrance style</p><p class="desc" data-key="c1d">The classic creativity test: how many unusual uses can an ordinary object get in two minutes? Quantity unlocks quality.</p><div class="mapchips"><span>Divergent Thinking</span><span>Fluency</span><span>Torrance AUT</span></div><p class="cstat" data-key="stat1">Best: <b id="cs-sprint">—</b></p><button class="launch" onclick="openTool('sprint')" data-key="btn1">Start Sprint</button></div>
-        <div class="card"><div class="icon">🎲</div><h3 data-key="c2t">Idea Blender</h3><p class="tagline" data-key="c2tag">SCAMPER · Forced connections</p><p class="desc" data-key="c2d">A random everyday object collides with a random SCAMPER verb. Your job: invent what happens next and log it.</p><div class="mapchips"><span>SCAMPER</span><span>Forced Association</span><span>Invention</span></div><p class="cstat" data-key="stat2">Blends: <b id="cs-blends">0</b></p><button class="launch" onclick="openTool('blender')" data-key="btn2">Blend Now</button></div>
-        <div class="card"><div class="icon">📖</div><h3 data-key="c3t">Story Forge</h3><p class="tagline" data-key="c3tag">Random sparks · Micro-fiction</p><p class="desc" data-key="c3d">Deal four spark cards — character, setting, object, genre — and forge a micro-story from the collision.</p><div class="mapchips"><span>Narrative</span><span>Improvisation</span><span>Combining</span></div><p class="cstat" data-key="stat3">Forged: <b id="cs-forged">0</b></p><button class="launch" onclick="openTool('forge')" data-key="btn3">Deal Sparks</button></div>
-        <div class="card"><div class="icon">🔗</div><h3 data-key="c4t">Remote Connections</h3><p class="tagline" data-key="c4tag">Mednick · Associative distance</p><p class="desc" data-key="c4d">Two unrelated words appear. The creative leap: find the bridge between them. Save your best links.</p><div class="mapchips"><span>Remote Associates</span><span>Metaphor</span></div><p class="cstat" data-key="stat4">Links: <b id="cs-links">0</b></p><button class="launch" onclick="openTool('links')" data-key="btn4">Find the Link</button></div>
-        <div class="card"><div class="icon">⛓️</div><h3 data-key="c5t">Constraint Crucible</h3><p class="tagline" data-key="c5tag">Limitations · Focus fuel</p><p class="desc" data-key="c5d">A random constraint meets a random subject, with sixty seconds on the clock. Limits force the mind to leap.</p><div class="mapchips"><span>Creative Constraint</span><span>Pressure</span><span>Focus</span></div><p class="cstat" data-key="stat5">Completed: <b id="cs-crucible">0</b></p><button class="launch" onclick="openTool('crucible')" data-key="btn5">Enter Crucible</button></div>
-        <div class="card"><div class="icon">🗂️</div><h3 data-key="c6t">Idea Vault</h3><p class="tagline" data-key="c6tag">Capture · Never lose an idea</p><p class="desc" data-key="c6d">Every blend, story and spark lands here — plus your own manual entries, tagged and searchable by category.</p><div class="mapchips"><span>Capture Habit</span><span>Review</span></div><p class="cstat" data-key="stat6">Vault: <b id="cs-vault">0</b></p><button class="launch" onclick="openTool('vault')" data-key="btn6">Open Vault</button></div>
+        <div class="card tilt reveal">
+            <div class="card-top"><div class="icon">⚡</div>
+                <div class="card-side"><span class="badge badge-hot">★ POPULAR</span>
+                    <div class="difficulty" title="Neural Load"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div></div>
+            <h3 data-key="c1t">Divergent Sprint</h3>
+            <p class="tagline" data-key="c1tag">Alternative uses · Torrance style</p>
+            <p class="desc" data-key="c1d">The classic creativity test: how many unusual uses can an ordinary object get in two minutes? Quantity unlocks quality.</p>
+            <div class="mapchips"><span>Divergent Thinking</span><span>Fluency</span><span>Torrance AUT</span></div>
+            <div class="neuro-load">
+                <div class="nl-row"><span>Prefrontal</span><div class="nl-bar"><b style="--w:88%"></b></div></div>
+                <div class="nl-row"><span>Divergent Think.</span><div class="nl-bar"><b style="--w:90%"></b></div></div>
+                <div class="nl-row"><span>Association</span><div class="nl-bar"><b style="--w:76%"></b></div></div>
+            </div>
+            <div class="card-foot"><span class="dur-chip">⏱ ~2 min</span><p class="cstat" data-key="stat1">Best: <b id="cs-sprint">—</b></p></div>
+            <button class="launch" onclick="openTool('sprint')" data-key="btn1">Start Sprint</button>
+        </div>
+        <div class="card tilt reveal">
+            <div class="card-top"><div class="icon">🎲</div>
+                <div class="card-side"><span class="badge badge-new">✦ NEW</span>
+                    <div class="difficulty" title="Neural Load"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div></div></div>
+            <h3 data-key="c2t">Idea Blender</h3>
+            <p class="tagline" data-key="c2tag">SCAMPER · Forced connections</p>
+            <p class="desc" data-key="c2d">A random everyday object collides with a random SCAMPER verb. Your job: invent what happens next and log it.</p>
+            <div class="mapchips"><span>SCAMPER</span><span>Forced Association</span><span>Invention</span></div>
+            <div class="neuro-load">
+                <div class="nl-row"><span>Association</span><div class="nl-bar"><b style="--w:84%"></b></div></div>
+                <div class="nl-row"><span>Prefrontal</span><div class="nl-bar"><b style="--w:72%"></b></div></div>
+                <div class="nl-row"><span>Parietal</span><div class="nl-bar"><b style="--w:58%"></b></div></div>
+            </div>
+            <div class="card-foot"><span class="dur-chip">⏱ ~3 min</span><p class="cstat" data-key="stat2">Blends: <b id="cs-blends">0</b></p></div>
+            <button class="launch" onclick="openTool('blender')" data-key="btn2">Blend Now</button>
+        </div>
+        <div class="card tilt reveal">
+            <div class="card-top"><div class="icon">📖</div>
+                <div class="card-side"><span class="badge badge-core">◆ CLASSIC</span>
+                    <div class="difficulty" title="Neural Load"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div></div>
+            <h3 data-key="c3t">Story Forge</h3>
+            <p class="tagline" data-key="c3tag">Random sparks · Micro-fiction</p>
+            <p class="desc" data-key="c3d">Deal four spark cards — character, setting, object, genre — and forge a micro-story from the collision.</p>
+            <div class="mapchips"><span>Narrative</span><span>Improvisation</span><span>Combining</span></div>
+            <div class="neuro-load">
+                <div class="nl-row"><span>Narrative</span><div class="nl-bar"><b style="--w:86%"></b></div></div>
+                <div class="nl-row"><span>Hippocampus</span><div class="nl-bar"><b style="--w:74%"></b></div></div>
+                <div class="nl-row"><span>Language</span><div class="nl-bar"><b style="--w:80%"></b></div></div>
+            </div>
+            <div class="card-foot"><span class="dur-chip">⏱ ~5 min</span><p class="cstat" data-key="stat3">Forged: <b id="cs-forged">0</b></p></div>
+            <button class="launch" onclick="openTool('forge')" data-key="btn3">Deal Sparks</button>
+        </div>
+        <div class="card tilt reveal">
+            <div class="card-top"><div class="icon">🔗</div>
+                <div class="card-side"><span class="badge badge-cool">◆ QUICK</span>
+                    <div class="difficulty" title="Neural Load"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div></div></div>
+            <h3 data-key="c4t">Remote Connections</h3>
+            <p class="tagline" data-key="c4tag">Mednick · Associative distance</p>
+            <p class="desc" data-key="c4d">Two unrelated words appear. The creative leap: find the bridge between them. Save your best links.</p>
+            <div class="mapchips"><span>Remote Associates</span><span>Metaphor</span></div>
+            <div class="neuro-load">
+                <div class="nl-row"><span>Association</span><div class="nl-bar"><b style="--w:82%"></b></div></div>
+                <div class="nl-row"><span>Ant. Cingulate</span><div class="nl-bar"><b style="--w:66%"></b></div></div>
+                <div class="nl-row"><span>Prefrontal</span><div class="nl-bar"><b style="--w:70%"></b></div></div>
+            </div>
+            <div class="card-foot"><span class="dur-chip">⏱ ~1 min</span><p class="cstat" data-key="stat4">Links: <b id="cs-links">0</b></p></div>
+            <button class="launch" onclick="openTool('links')" data-key="btn4">Find the Link</button>
+        </div>
+        <div class="card tilt reveal">
+            <div class="card-top"><div class="icon">⛓️</div>
+                <div class="card-side"><span class="badge badge-cool">◆ PRESSURE</span>
+                    <div class="difficulty" title="Neural Load"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div></div>
+            <h3 data-key="c5t">Constraint Crucible</h3>
+            <p class="tagline" data-key="c5tag">Limitations · Focus fuel</p>
+            <p class="desc" data-key="c5d">A random constraint meets a random subject, with sixty seconds on the clock. Limits force the mind to leap.</p>
+            <div class="mapchips"><span>Creative Constraint</span><span>Pressure</span><span>Focus</span></div>
+            <div class="neuro-load">
+                <div class="nl-row"><span>Prefrontal</span><div class="nl-bar"><b style="--w:90%"></b></div></div>
+                <div class="nl-row"><span>Ant. Cingulate</span><div class="nl-bar"><b style="--w:84%"></b></div></div>
+                <div class="nl-row"><span>Temporal</span><div class="nl-bar"><b style="--w:62%"></b></div></div>
+            </div>
+            <div class="card-foot"><span class="dur-chip">⏱ ~1 min</span><p class="cstat" data-key="stat5">Completed: <b id="cs-crucible">0</b></p></div>
+            <button class="launch" onclick="openTool('crucible')" data-key="btn5">Enter Crucible</button>
+        </div>
+        <div class="card tilt reveal">
+            <div class="card-top"><div class="icon">🗂️</div>
+                <div class="card-side"><span class="badge badge-core">◆ DAILY</span>
+                    <div class="difficulty" title="Neural Load"><i class="on"></i><i></i><i></i><i></i><i></i></div></div></div>
+            <h3 data-key="c6t">Idea Vault</h3>
+            <p class="tagline" data-key="c6tag">Capture · Never lose an idea</p>
+            <p class="desc" data-key="c6d">Every blend, story and spark lands here — plus your own manual entries, tagged and searchable by category.</p>
+            <div class="mapchips"><span>Capture Habit</span><span>Review</span></div>
+            <div class="neuro-load">
+                <div class="nl-row"><span>Hippocampus</span><div class="nl-bar"><b style="--w:80%"></b></div></div>
+                <div class="nl-row"><span>Working Memory</span><div class="nl-bar"><b style="--w:72%"></b></div></div>
+                <div class="nl-row"><span>Review Habit</span><div class="nl-bar"><b style="--w:68%"></b></div></div>
+            </div>
+            <div class="card-foot"><span class="dur-chip">⏱ ~2 min</span><p class="cstat" data-key="stat6">Vault: <b id="cs-vault">0</b></p></div>
+            <button class="launch" onclick="openTool('vault')" data-key="btn6">Open Vault</button>
+        </div>
     </div>
 </section>
 
@@ -522,6 +673,41 @@ list.innerHTML=items.map(v=>'<div class="vrow"><div class="vtxt">'+esc(v.text)+'
 +'<button class="vdel" data-id="'+v.id+'">✕</button></div>').join('');
 list.querySelectorAll('.vdel').forEach(b=>{b.onclick=()=>{vault=vault.filter(x=>x.id!=b.dataset.id);saveVault();toast(t('iv_deleted'));renderCats();renderList();renderDash();renderCardStats();};});}
 renderCats();renderList();}
+
+/* ===== PRO UPGRADE: REVEAL, TILT, MISSION STRIP, QUICK LAUNCH ===== */
+Object.assign(translations.en,{"eyebrow": "◆ DIVERGENT THINKING LAB ◆", "ms_badge": "🔥 TODAY'S MISSION", "ms_text": "Create one idea today — any instrument counts"});
+Object.assign(translations.ur,{"eyebrow": "◆ DIVERGENT THINKING LAB ◆", "ms_badge": "🔥 AAJ KA MISSION", "ms_text": "Aaj ek idea banayein — koi bhi instrument chalega"});
+
+const POD_LIST=[{"fn": "openTool", "tool": "sprint", "icon": "⚡", "nameKey": "g_ds_t"}, {"fn": "openTool", "tool": "blender", "icon": "🎲", "nameKey": "g_ib_t"}, {"fn": "openTool", "tool": "forge", "icon": "📖", "nameKey": "g_sf_t"}, {"fn": "openTool", "tool": "links", "icon": "🔗", "nameKey": "g_rc_t"}, {"fn": "openTool", "tool": "crucible", "icon": "⛓️", "nameKey": "g_cc_t"}, {"fn": "openTool", "tool": "vault", "icon": "🗂️", "nameKey": "g_iv_t"}];
+const MS_GOAL=1;
+function msCur(){return activity.includes(todayStr())?1:0;}
+function updateMsProgress(){const cur=Math.min(msCur(),MS_GOAL);
+const bar=document.getElementById('msBar');if(bar)bar.style.width=(cur/MS_GOAL*100)+'%';
+const c=document.getElementById('msCount');if(c)c.textContent=cur>=MS_GOAL?'✓':cur+' / '+MS_GOAL;
+const tx=document.getElementById('msText');if(tx)tx.style.color=cur>=MS_GOAL?'#34d399':'';}
+function renderMission(){if(!document.getElementById('msBadge'))return;
+document.getElementById('msBadge').textContent=t('ms_badge');
+document.getElementById('msText').textContent=t('ms_text');
+document.getElementById('msLaunch').innerHTML=POD_LIST.map((p,i)=>'<button class="qp" data-i="'+i+'" title="'+t(p.nameKey)+'">'+p.icon+'</button>').join('');
+document.querySelectorAll('#msLaunch .qp').forEach(btn=>{btn.onclick=()=>{const p=POD_LIST[+btn.dataset.i];window[p.fn](p.tool);};});
+updateMsProgress();}
+setInterval(updateMsProgress,3000);
+const _setLang=setLang;
+setLang=function(l){_setLang(l);renderMission();};
+renderMission();
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=Math.min(i%7,6)*0.07+'s';io.observe(el);});
+
+/* 3D tilt + cursor spotlight */
+document.querySelectorAll('.tilt').forEach(card=>{
+card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=e.clientX-r.left,y=e.clientY-r.top;
+card.style.setProperty('--mx',x+'px');card.style.setProperty('--my',y+'px');
+const rx=((y/r.height)-.5)*-7,ry=((x/r.width)-.5)*9;
+card.style.transform='translateY(-14px) rotateX('+rx+'deg) rotateY('+ry+'deg) scale(1.02)';});
+card.addEventListener('mouseleave',()=>{card.style.transform='';});
+});
 
 const TOOLS={sprint:toolSprint,blender:toolBlender,forge:toolForge,links:toolLinks,crucible:toolCrucible,vault:toolVault};
 renderDash();renderCardStats();
